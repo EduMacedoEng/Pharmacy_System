@@ -16,6 +16,8 @@ public class Fornecedores {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Fornecedores [codigo=" + codigo + ", descricao=" + descricao + "]";
+	}
 }

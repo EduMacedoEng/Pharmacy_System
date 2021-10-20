@@ -2,6 +2,7 @@ package br.com.pharmacy.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.com.pharmacy.domain.Fornecedores;
@@ -54,5 +55,30 @@ public class FornecedoresDAO {
 		comando.setLong(2, f.getCodigo());
 		
 		comando.executeUpdate();
+	}
+
+	public Fornecedores buscaPorCodigo(Fornecedores f) throws SQLException {
+		StringBuilder query = new StringBuilder();
+		Fornecedores fRetorno = new Fornecedores();
+		
+		query.append("SELECT codigo, descricao ");
+		query.append("FROM fornecedores ");
+		query.append("WHERE codigo = ? ");
+		
+		Connection conexao = ConexaoFactory.conectar();
+		
+		PreparedStatement comando = conexao.prepareStatement(query.toString());
+		
+		comando.setLong(1, f.getCodigo());
+		ResultSet resultado = comando.executeQuery();
+		
+		if (resultado.next()) { // If exists results
+			fRetorno.setCodigo(resultado.getLong("codigo"));
+			fRetorno.setDescricao(resultado.getString("descricao"));
+			
+			return fRetorno;
+		}
+		
+		return fRetorno ;
 	}
 }
