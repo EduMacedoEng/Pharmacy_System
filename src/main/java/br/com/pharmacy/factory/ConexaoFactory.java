@@ -10,6 +10,10 @@ public class ConexaoFactory {
 	private static final String URL = "jdbc:mysql://0.0.0.0:3306/sistema";
 	
 	public static Connection conectar() throws SQLException {
+		
+		// MySQL Driver reference for older JAVA versions
+		// DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		
 		Connection conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
 		
 		return conexao;
