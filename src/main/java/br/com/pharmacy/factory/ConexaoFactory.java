@@ -12,7 +12,7 @@ public class ConexaoFactory {
 	public static Connection conectar() throws SQLException {
 		
 		// MySQL Driver reference for older JAVA versions
-		// DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		
 		Connection conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
 		
