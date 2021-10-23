@@ -12,9 +12,10 @@
 	</ui:define>
 	
 	<ui:define name="conteudo">
-		<h:form>
+		<!-- I need to define ID, because after I have the new record I'll need to updated the DataTable list, for that I'll use the ID -->
+		<h:form id="frmFornecedores">
 			<!-- The #{MBFornecedores.itens} is a way to access the data that comes from database and has as intermediary the FornecedoresBean -->
-			<p:dataTable emptyMessage = "Nenhum registro encontrado !" 
+			<p:dataTable id="tbFornecedores" emptyMessage = "Nenhum registro encontrado !" 
 		    value="#{MBFornecedores.itens}" var="item" paginator="true" rows="5">
 				<f:facet name="header">Lista de Fornecedores</f:facet>    
 			        <p:column headerText="Código" sortBy="#{item.codigo}" filterBy="#{item.codigo}">
@@ -42,7 +43,8 @@
 					<h:inputText size="30" maxlength="50" value="#{MBFornecedores.fornecedores.descricao}"/>
 				</h:panelGrid>
 				<h:panelGrid columns="2">
-					<p:commandButton value="Gravar" actionListener="#{MBFornecedores.novo}" oncomplete="PF('dlgforNovo').hide();"/>
+					<p:commandButton value="Gravar" actionListener="#{MBFornecedores.novo}" oncomplete="PF('dlgforNovo').hide();" 
+													update=":frmFornecedores:tbFornecedores"/>
 					<p:commandButton value="Cancelar" onclick="PF('dlgforNovo').hide();"/>
 				</h:panelGrid>
 			</h:form>

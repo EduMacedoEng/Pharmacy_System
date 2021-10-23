@@ -54,6 +54,10 @@ public class FornecedoresBean {
 		try {
 			FornecedoresDAO fdao = new FornecedoresDAO();
 			fdao.salvar(fornecedores);
+			
+			// Here I allow the table when to reload to be updated.
+			ArrayList<Fornecedores> lista = fdao.listar();
+			itens = new ListDataModel<Fornecedores>(lista);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
