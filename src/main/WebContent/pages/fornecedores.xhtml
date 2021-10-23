@@ -14,7 +14,10 @@
 	<ui:define name="conteudo">
 	    <p:dataTable emptyMessage = "Nenhum registro encontrado !" 
 	    value="#{MBFornecedores.itens}" 
-	    var="item">
+	    var="item"
+	    paginator="true"
+	    rows="5"
+	    >
 	        <p:column headerText="Código">
 				<h:outputText value="#{item.codigo}" />
 	        </p:column>
