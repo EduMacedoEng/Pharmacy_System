@@ -10,6 +10,7 @@ import javax.faces.model.ListDataModel;
 
 import br.com.pharmacy.DAO.FornecedoresDAO;
 import br.com.pharmacy.domain.Fornecedores;
+import br.com.pharmacy.util.JSFUtil;
 
 @ManagedBean(name = "MBFornecedores")
 @ViewScoped
@@ -41,7 +42,7 @@ public class FornecedoresBean {
 			
 			itens = new ListDataModel<Fornecedores>(lista);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			JSFUtil.adicionarMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -58,8 +59,11 @@ public class FornecedoresBean {
 			// Here I allow the table when to reload to be updated.
 			ArrayList<Fornecedores> lista = fdao.listar();
 			itens = new ListDataModel<Fornecedores>(lista);
+			
+			// The third step I need to call message method in JSFUtil class.
+			JSFUtil.adicionarMensagemSucesso("Fornecedor salvo com sucesso!");
 		} catch (Exception e) {
-			// TODO: handle exception
+			JSFUtil.adicionarMensagemErro(e.getMessage());
 			e.getStackTrace();
 		}
 	}
