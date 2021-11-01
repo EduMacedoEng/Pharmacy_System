@@ -28,15 +28,15 @@
 		        <f:facet name="footer">
 		        	<!-- When I want to use the actionListener with one click, I can't use onclick, instead, I use oncomplete.
 		        		 First, the Button complete the action (oncomplete) and after execute the function (actionListener) -->
-		        	<p:commandButton value="Novo" actionListener="#{MBFornecedores.beforeNovo}" oncomplete="PF('dlgforNovo').show();"/>
+		        	<p:commandButton value="Novo" actionListener="#{MBFornecedores.beforeNovo}" oncomplete="PF('dlgforNovo').show();" update=":frmNovoForn:pnNovoForn"/>
 		        </f:facet>
 	    	</p:dataTable>
 		</h:form>
 		<!-- Here I need to make the background inaccessible when I have a focus in DialogBox, for that I need to use modal="true" and appenTo="@(body)" -->
 		<p:dialog widgetVar="dlgforNovo" closable="false" draggable="false" resizable="false" 
 		header="Cadastrar Fornecedor" modal="true" appendTo="@(body)">
-			<h:form>
-				<h:panelGrid columns="2">
+			<h:form id="frmNovoForn">
+				<h:panelGrid id="pnNovoForn" columns="2">
 					<p:outputLabel value="Descrição: "/>
 					<!-- When I have the value attribute, it means that the data coming from Descricação goes to #{MBFornecedores.fornecedores.descricao}. 
 						 This way I can save the Description in the Database Table. -->
