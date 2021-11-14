@@ -25,6 +25,10 @@
 			        <p:column headerText="Descrição" sortBy="#{item.descricao}" filterBy="#{item.descricao}">
 			        	<h:outputText value="#{item.descricao}" />
 			        </p:column>
+			        
+			        <p:column headerText="Opções">
+			        	<p:commandButton icon="ui-icon-trash" />
+			        </p:column>
 		        <f:facet name="footer">
 		        	<!-- When I want to use the actionListener with one click, I can't use onclick, instead, I use oncomplete.
 		        		 First, the Button complete the action (oncomplete) and after execute the function (actionListener) -->
