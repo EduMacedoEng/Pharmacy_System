@@ -68,4 +68,23 @@ public class FornecedoresBean {
 		}
 	}
 	
+	public void beforeExcluir() {
+		fornecedores = itens.getRowData();
+	}
+	
+	public void excluir() {
+		try {
+			FornecedoresDAO fdao = new FornecedoresDAO();
+			fdao.deletar(fornecedores);
+			
+			ArrayList<Fornecedores> lista = fdao.listar();
+			itens = new ListDataModel<Fornecedores>(lista);
+			
+			JSFUtil.adicionarMensagemSucesso("Fornecedores excluido com sucesso!!!");
+			
+		} catch (Exception e) {
+			JSFUtil.adicionarMensagemErro("Não é possível excluir um fornecedores que tenha produtos associados.");
+			e.printStackTrace();
+		}
+	}
 }
