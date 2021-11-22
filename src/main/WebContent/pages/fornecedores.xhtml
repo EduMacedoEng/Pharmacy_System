@@ -29,6 +29,9 @@
 			        <p:column headerText= "Opções">
 			        	<p:commandButton icon="ui-icon-trash" actionListener="#{MBFornecedores.beforeExcluir}" 
 		        			oncomplete="PF('dlgforExcluir').show();" update=":frmExcluirForn:pnExcluirForn"/>
+		        			
+		        		<p:commandButton icon="ui-icon-pencil" actionListener="#{MBFornecedores.beforeEditar}" 
+		        			oncomplete="PF('dlgforEditar').show();" update=":frmEditarForn:pnEditarForn"/>
 			        </p:column>
 			        
 			    
@@ -74,6 +77,25 @@
 					<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}"
 						oncomplete="PF('dlgforExcluir').hide();" update=":frmFornecedores:tbFornecedores :msgGlobal" />
 					<p:commandButton value="Cancelar" onclick="PF('dlgforExcluir').hide();"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog widgetVar="dlgforEditar" closable="false" draggable="false" resizable="false" 
+		header="Editar Fornecedor" modal="true" appendTo="@(body)">
+			<h:form id="frmEditarForn">
+				<h:panelGrid id="pnEditarForn" columns="2">
+					<h:outputText value="Código: " />
+					<h:outputText value="#{MBFornecedores.fornecedores.codigo}"/>
+					
+					<h:outputText value="Descrição: " />
+					<h:inputText value="#{MBFornecedores.fornecedores.descricao}"/>
+				</h:panelGrid>
+					
+				<h:panelGrid columns="2">
+					<p:commandButton value="Editar" actionListener="#{MBFornecedores.editar}"
+						oncomplete="PF('dlgforEditar').hide();" update=":frmFornecedores:tbFornecedores :msgGlobal" />
+					<p:commandButton value="Cancelar" onclick="PF('dlgforEditar').hide();"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -87,4 +87,24 @@ public class FornecedoresBean {
 			e.printStackTrace();
 		}
 	}
+
+	public void beforeEditar() {
+		fornecedores = itens.getRowData();
+	}
+	
+	public void editar() {
+		try {
+			FornecedoresDAO fdao = new FornecedoresDAO();
+			fdao.editar(fornecedores);
+			
+			ArrayList<Fornecedores> lista = fdao.listar();
+			itens = new ListDataModel<Fornecedores>(lista);
+			
+			JSFUtil.adicionarMensagemSucesso("Fornecedores editado com sucesso!!!");
+			
+		} catch (Exception e) {
+			JSFUtil.adicionarMensagemErro("Não é possível editar um fornecedor(es) com produtos associados.");
+			e.printStackTrace();
+		}
+	} 
 }
