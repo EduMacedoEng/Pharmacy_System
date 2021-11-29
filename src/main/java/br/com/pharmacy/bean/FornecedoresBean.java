@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.ListDataModel;
 
 import br.com.pharmacy.DAO.FornecedoresDAO;
 import br.com.pharmacy.domain.Fornecedores;
@@ -15,7 +14,8 @@ import br.com.pharmacy.util.JSFUtil;
 @ManagedBean(name = "MBFornecedores")
 @ViewScoped
 public class FornecedoresBean {
-	private ListDataModel<Fornecedores> itens;
+	private ArrayList<Fornecedores> itens;
+	private ArrayList<Fornecedores> itensFiltrados;
 	private Fornecedores fornecedores;
 
 	public Fornecedores getFornecedores() {
@@ -26,21 +26,27 @@ public class FornecedoresBean {
 		this.fornecedores = fornecedores;
 	}
 
-	public ListDataModel<Fornecedores> getItens() {
+	public ArrayList<Fornecedores> getItens() {
 		return itens;
 	}
 
-	public void setItens(ListDataModel<Fornecedores> itens) {
+	public void setItens(ArrayList<Fornecedores> itens) {
 		this.itens = itens;
 	}
 	
+	public ArrayList<Fornecedores> getItensFiltrados() {
+		return itensFiltrados;
+	}
+
+	public void setItensFiltrados(ArrayList<Fornecedores> itensFiltrados) {
+		this.itensFiltrados = itensFiltrados;
+	}
+
 	@PostConstruct
 	public void prepararPesquisa() {
 		try {
 			FornecedoresDAO fdao = new FornecedoresDAO();
-			ArrayList<Fornecedores> lista = fdao.listar();
-			
-			itens = new ListDataModel<Fornecedores>(lista);
+			itens = fdao.listar();
 		} catch (SQLException e) {
 			JSFUtil.adicionarMensagemErro(e.getMessage());
 			e.printStackTrace();
@@ -57,8 +63,7 @@ public class FornecedoresBean {
 			fdao.salvar(fornecedores);
 			
 			// Here I allow the table when to reload to be updated.
-			ArrayList<Fornecedores> lista = fdao.listar();
-			itens = new ListDataModel<Fornecedores>(lista);
+			itens = fdao.listar();
 			
 			// The third step I need to call message method in JSFUtil class.
 			JSFUtil.adicionarMensagemSucesso("Fornecedor salvo com sucesso!");
@@ -68,17 +73,12 @@ public class FornecedoresBean {
 		}
 	}
 	
-	public void beforeExcluir() {
-		fornecedores = itens.getRowData();
-	}
-	
 	public void excluir() {
 		try {
 			FornecedoresDAO fdao = new FornecedoresDAO();
 			fdao.deletar(fornecedores);
 			
-			ArrayList<Fornecedores> lista = fdao.listar();
-			itens = new ListDataModel<Fornecedores>(lista);
+			itens = fdao.listar();
 			
 			JSFUtil.adicionarMensagemSucesso("Fornecedores excluido com sucesso!!!");
 			
@@ -87,18 +87,13 @@ public class FornecedoresBean {
 			e.printStackTrace();
 		}
 	}
-
-	public void beforeEditar() {
-		fornecedores = itens.getRowData();
-	}
 	
 	public void editar() {
 		try {
 			FornecedoresDAO fdao = new FornecedoresDAO();
 			fdao.editar(fornecedores);
 			
-			ArrayList<Fornecedores> lista = fdao.listar();
-			itens = new ListDataModel<Fornecedores>(lista);
+			itens = fdao.listar();
 			
 			JSFUtil.adicionarMensagemSucesso("Fornecedores editado com sucesso!!!");
 			

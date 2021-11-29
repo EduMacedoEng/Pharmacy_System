@@ -15,8 +15,15 @@
 		<!-- I need to define ID, because after I have the new record I'll need to updated the DataTable list, for that I'll use the ID -->
 		<h:form id="frmFornecedores">
 			<!-- The #{MBFornecedores.itens} is a way to access the data that comes from database and has as intermediary the FornecedoresBean -->
-			<p:dataTable id="tbFornecedores" emptyMessage = "Nenhum registro encontrado !" 
-		    value="#{MBFornecedores.itens}" var="item" paginator="true" rows="5">
+			<p:dataTable 
+				id="tbFornecedores" 
+				emptyMessage = "Nenhum registro encontrado !" 
+		    	widgetVar="tabelaFornecedores"
+		    	value="#{MBFornecedores.itens}" 
+		    	var="item" 
+		    	filteredValue="#{MBFornecedores.itensFiltrados}" 
+		    	paginator="true" 
+		    	rows="5">
 				<f:facet name="header">Lista de Fornecedores</f:facet>    
 			        <p:column headerText="Código" sortBy="#{item.codigo}" filterBy="#{item.codigo}">
 						<h:outputText value="#{item.codigo}" />
@@ -27,19 +34,22 @@
 			        </p:column>
 			        
 			        <p:column headerText= "Opções">
-			        	<p:commandButton icon="ui-icon-trash" actionListener="#{MBFornecedores.beforeExcluir}" 
-		        			oncomplete="PF('dlgforExcluir').show();" update=":frmExcluirForn:pnExcluirForn"/>
+			        	<p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgforExcluir').show();" update=":frmExcluirForn:pnExcluirForn">
+		        			<f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"/>
+		        		</p:commandButton>
 		        			
-		        		<p:commandButton icon="ui-icon-pencil" actionListener="#{MBFornecedores.beforeEditar}" 
-		        			oncomplete="PF('dlgforEditar').show();" update=":frmEditarForn:pnEditarForn"/>
+		        		<p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgforEditar').show();" update=":frmEditarForn:pnEditarForn">
+		        			<f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"/>
+		        		</p:commandButton>
 			        </p:column>
 			        
-			    
-		        <f:facet name="footer">
-		        	<!-- When I want to use the actionListener with one click, I can't use onclick, instead, I use oncomplete.
+			    <!-- When I want to use the actionListener with one click, I can't use onclick, instead, I use oncomplete.
 		        		 First, the Button complete the action (oncomplete) and after execute the function (actionListener) -->
-		        	<p:commandButton value="Novo" actionListener="#{MBFornecedores.beforeNovo}" 
-		        		oncomplete="PF('dlgforNovo').show();" update=":frmNovoForn:pnNovoForn"/>
+		        <f:facet name="footer">
+		        	<p:commandButton value="Novo" 
+		        		actionListener="#{MBFornecedores.beforeNovo}" 
+		        		oncomplete="PF('dlgforNovo').show();" 
+		        		update=":frmNovoForn:pnNovoForn"/>
 		        </f:facet>
 	    	</p:dataTable>
 		</h:form>
@@ -51,13 +61,16 @@
 					<p:outputLabel value="Descrição: "/>
 					<!-- When I have the value attribute, it means that the data coming from Descricação goes to #{MBFornecedores.fornecedores.descricao}. 
 						 This way I can save the Description in the Database Table. -->
-					<h:inputText size="30" maxlength="50" value="#{MBFornecedores.fornecedores.descricao}"/>
+					<h:inputText size="30" maxlength="150" value="#{MBFornecedores.fornecedores.descricao}"/>
 				</h:panelGrid>
+				<!-- The fourth step is to call the growl ID within the update -->
 				<h:panelGrid columns="2">
-					<!-- The fourth step is to call the growl ID within the update -->
-					<p:commandButton value="Gravar" actionListener="#{MBFornecedores.novo}" oncomplete="PF('dlgforNovo').hide();" 
-													update=":frmFornecedores:tbFornecedores :msgGlobal"/>
-					<p:commandButton value="Cancelar" onclick="PF('dlgforNovo').hide();"/>
+					<p:commandButton value="Gravar" 
+						actionListener="#{MBFornecedores.novo}" 
+						oncomplete="PF('dlgforNovo').hide(); PF('tabelaFornecedores').clearFilters(); " 
+						update=":frmFornecedores:tbFornecedores :msgGlobal"/>
+					<p:commandButton value="Cancelar" 
+						onclick="PF('dlgforNovo').hide();"/>
 				</h:panelGrid>
 			</h:form>
 	    </p:dialog>
@@ -75,7 +88,8 @@
 					
 				<h:panelGrid columns="2">
 					<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}"
-						oncomplete="PF('dlgforExcluir').hide();" update=":frmFornecedores:tbFornecedores :msgGlobal" />
+						oncomplete="PF('dlgforExcluir').hide(); PF('tabelaFornecedores').clearFilters(); " 
+						update=":frmFornecedores:tbFornecedores :msgGlobal" />
 					<p:commandButton value="Cancelar" onclick="PF('dlgforExcluir').hide();"/>
 				</h:panelGrid>
 			</h:form>
@@ -92,9 +106,10 @@
 					<h:inputText value="#{MBFornecedores.fornecedores.descricao}"/>
 				</h:panelGrid>
 					
-				<h:panelGrid columns="2">
+				<h:panelGrid columns="2">	
 					<p:commandButton value="Editar" actionListener="#{MBFornecedores.editar}"
-						oncomplete="PF('dlgforEditar').hide();" update=":frmFornecedores:tbFornecedores :msgGlobal" />
+							oncomplete="PF('dlgforEditar').hide(); PF('tabelaFornecedores').clearFilters(); " 
+							update=":frmFornecedores:tbFornecedores :msgGlobal" />
 					<p:commandButton value="Cancelar" onclick="PF('dlgforEditar').hide();"/>
 				</h:panelGrid>
 			</h:form>
