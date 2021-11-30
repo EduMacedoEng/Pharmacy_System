@@ -18,8 +18,8 @@ public class ProdutosDAO {
 		
 		comando.setString(1, p.getDescricao());
 		comando.setDouble(2, p.getPreco());
-		comando.setLong(2, p.getQuantidade());
-		comando.setLong(3, p.getFornecedores().getCodigo());
+		comando.setLong(3, p.getQuantidade());
+		comando.setLong(4, p.getFornecedores().getCodigo());
 		comando.executeUpdate();
 	}
 }
