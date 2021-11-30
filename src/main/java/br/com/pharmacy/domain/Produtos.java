@@ -37,6 +37,11 @@ public class Produtos {
 	public void setFornecedores(Fornecedores fornecedores) {
 		this.fornecedores = fornecedores;
 	}
+	@Override
+	public String toString() {
+		return "Produtos: [codigo=" + codigo + ", descricao=" + descricao + ", quantidade=" + quantidade + ", preco="
+				+ preco + ", fornecedores=" + fornecedores + "]";
+	}
 	
 	
 	
