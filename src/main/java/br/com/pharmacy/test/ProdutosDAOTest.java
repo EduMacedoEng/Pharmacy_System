@@ -14,18 +14,18 @@ import br.com.pharmacy.domain.Produtos;
 public class ProdutosDAOTest {
 	
 	@Test
-	@Ignore
 	public void salvar() throws SQLException {
 		Produtos p1 = new Produtos();
 		Fornecedores f1 = new Fornecedores();
 		ProdutosDAO pdao = new ProdutosDAO();
 		
 		
-		p1.setDescricao("Aspirina");
-		p1.setPreco(5.99);
-		p1.setQuantidade(6L);
+		p1.setDescricao("Reconter 20 mg");
+		p1.setPreco(50.99);
+		p1.setQuantidade(23L);
 		
-		f1.setCodigo(34L);
+		f1.setCodigo(42L);
+		f1.setDescricao("Libbs");
 		p1.setFornecedores(f1);
 		
 		pdao.salvar(p1);
@@ -75,6 +75,7 @@ public class ProdutosDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void buscarPorCodigo() throws SQLException{
 		Produtos p = new Produtos();
 		ProdutosDAO pdao = new ProdutosDAO();
@@ -85,6 +86,7 @@ public class ProdutosDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void buscarPorDescricao() throws SQLException{
 		Produtos p = new Produtos();
 		ProdutosDAO pdao = new ProdutosDAO();
