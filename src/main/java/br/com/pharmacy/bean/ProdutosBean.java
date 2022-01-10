@@ -92,4 +92,32 @@ public class ProdutosBean {
 			e.getStackTrace();
 		}
 	}
+	
+	public void excluir() {
+		try {
+			ProdutosDAO pdao = new ProdutosDAO();
+			pdao.deletar(produtos);
+			
+			itens = pdao.listar();
+			
+			JSFUtil.adicionarMensagemSucesso("Produto excluido com sucesso!!!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void editar() {
+		try {
+			ProdutosDAO pdao = new ProdutosDAO();
+			pdao.editar(produtos);
+			
+			itens = pdao.listar();
+			
+			JSFUtil.adicionarMensagemSucesso("Produtos editado com sucesso!!!");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	} 
 }
