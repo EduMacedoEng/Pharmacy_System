@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.pharmacy.DAO.FornecedoresDAO;
 import br.com.pharmacy.DAO.ProdutosDAO;
 import br.com.pharmacy.domain.Fornecedores;
 import br.com.pharmacy.domain.Produtos;
@@ -19,7 +20,7 @@ public class ProdutosBean {
 	private ArrayList<Produtos> itensFiltrados;
 	private ArrayList<Fornecedores> comboFornecedores;
 	
-	private Produtos Produtos;
+	private Produtos produtos;
 	
 	public ArrayList<Fornecedores> getComboFornecedores() {
 		return comboFornecedores;
@@ -30,11 +31,11 @@ public class ProdutosBean {
 	}
 
 	public Produtos getProdutos() {
-		return Produtos;
+		return produtos;
 	}
 
-	public void setProdutos(Produtos Produtos) {
-		this.Produtos = Produtos;
+	public void setProdutos(Produtos produtos) {
+		this.produtos = produtos;
 	}
 
 	public ArrayList<Produtos> getItens() {
@@ -61,6 +62,34 @@ public class ProdutosBean {
 		} catch (SQLException e) {
 			JSFUtil.adicionarMensagemErro(e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	
+	public void prepararNovo() {
+		
+		try {
+			produtos = new Produtos();
+			
+			FornecedoresDAO fdao = new FornecedoresDAO();
+			comboFornecedores = fdao.listar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void novo() {
+		try {
+			ProdutosDAO pdao = new ProdutosDAO();
+			pdao.salvar(produtos);
+			
+			// Here I allow the table when to reload to be updated.
+			itens = pdao.listar();
+			
+			// The third step I need to call message method in JSFUtil class.
+			JSFUtil.adicionarMensagemSucesso("Produto salvo com sucesso!");
+		} catch (Exception e) {
+			JSFUtil.adicionarMensagemErro(e.getMessage());
+			e.getStackTrace();
 		}
 	}
 }
