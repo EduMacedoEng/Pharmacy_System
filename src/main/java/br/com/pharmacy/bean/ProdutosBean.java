@@ -77,6 +77,18 @@ public class ProdutosBean {
 		}
 	}
 	
+	public void prepararEditar() {
+		
+		try {
+			produtos = new Produtos();
+			
+			FornecedoresDAO fdao = new FornecedoresDAO();
+			comboFornecedores = fdao.listar();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void novo() {
 		try {
 			ProdutosDAO pdao = new ProdutosDAO();
