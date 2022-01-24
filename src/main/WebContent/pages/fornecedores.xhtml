@@ -25,21 +25,39 @@
 		    	paginator="true" 
 		    	rows="5">
 				<f:facet name="header">Lista de Fornecedores</f:facet>    
-			        <p:column headerText="Código" sortBy="#{item.codigo}" filterBy="#{item.codigo}">
-						<h:outputText value="#{item.codigo}" />
+			        <p:column 
+						headerText="Código" 
+						sortBy="#{item.codigo}" 
+						filterBy="#{item.codigo}">
+						<h:outputText 
+							value="#{item.codigo}" />
 			        </p:column>
 			
-			        <p:column headerText="Descrição" sortBy="#{item.descricao}" filterBy="#{item.descricao}">
-			        	<h:outputText value="#{item.descricao}" />
+			        <p:column 
+						headerText="Descrição" 
+						sortBy="#{item.descricao}" 
+						filterBy="#{item.descricao}">
+			        	<h:outputText 
+							value="#{item.descricao}" />
 			        </p:column>
 			        
 			        <p:column headerText= "Opções">
-			        	<p:commandButton icon="ui-icon-trash" oncomplete="PF('dlgforExcluir').show();" update=":frmExcluirForn:pnExcluirForn">
-		        			<f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"/>
+			        	<p:commandButton 
+							icon="ui-icon-trash" 
+			        		oncomplete="PF('dlgforExcluir').show();" 
+			        		update=":frmforExcluir:pnforExcluir">
+		        			<f:setPropertyActionListener 
+		        				value="#{item}" 
+		        				target="#{MBFornecedores.fornecedores}"/>
 		        		</p:commandButton>
 		        			
-		        		<p:commandButton icon="ui-icon-pencil" oncomplete="PF('dlgforEditar').show();" update=":frmEditarForn:pnEditarForn">
-		        			<f:setPropertyActionListener value="#{item}" target="#{MBFornecedores.fornecedores}"/>
+		        		<p:commandButton 
+							icon="ui-icon-pencil" 
+		        			oncomplete="PF('dlgforEditar').show();" 
+		        			update=":frmEditarForn:pnEditarForn :msgGlobal">
+		        			<f:setPropertyActionListener 
+		        				value="#{item}" 
+		        				target="#{MBFornecedores.fornecedores}"/>
 		        		</p:commandButton>
 			        </p:column>
 			        
@@ -49,36 +67,46 @@
 		        	<p:commandButton value="Novo" 
 		        		actionListener="#{MBFornecedores.beforeNovo}" 
 		        		oncomplete="PF('dlgforNovo').show();" 
-		        		update=":frmNovoForn:pnNovoForn"/>
+		        		update=":frmforNovo:pnforNovo :msgGlobal"/>
 		        </f:facet>
 	    	</p:dataTable>
 		</h:form>
 		<!-- Here I need to make the background inaccessible when I have a focus in DialogBox, for that I need to use modal="true" and appenTo="@(body)" -->
 		<p:dialog widgetVar="dlgforNovo" closable="false" draggable="false" resizable="false" 
 		header="Cadastrar Fornecedor" modal="true" appendTo="@(body)">
-			<h:form id="frmNovoForn">
-				<h:panelGrid id="pnNovoForn" columns="2">
-					<p:outputLabel value="Descrição: "/>
+			<h:form id="frmforNovo">
+				<h:panelGrid id="pnforNovo" columns="2">
+					<p:outputLabel 
+						value="Descrição: " 
+						for="txtDescNovo"/>
 					<!-- When I have the value attribute, it means that the data coming from Descricação goes to #{MBFornecedores.fornecedores.descricao}. 
 						 This way I can save the Description in the Database Table. -->
-					<h:inputText size="30" maxlength="150" value="#{MBFornecedores.fornecedores.descricao}"/>
+					<h:inputText
+						id="txtDescNovo"
+						size="30" 
+						maxlength="150" 
+						value="#{MBFornecedores.fornecedores.descricao}" 
+						required="true"
+						requiredMessage="O campo Descrição é obrigatório !!!"
+						/>
 				</h:panelGrid>
 				<!-- The fourth step is to call the growl ID within the update -->
 				<h:panelGrid columns="2">
-					<p:commandButton value="Gravar" 
+					<p:commandButton 
+						value="Gravar" 
 						actionListener="#{MBFornecedores.novo}" 
-						oncomplete="PF('dlgforNovo').hide(); PF('tabelaFornecedores').clearFilters(); " 
+						oncomplete="verificarCampos(xhr, status, args, 'dlgforNovo', 'tbFornecedores');" 
 						update=":frmFornecedores:tbFornecedores :msgGlobal"/>
 					<p:commandButton value="Cancelar" 
-						onclick="PF('dlgforNovo').hide();"/>
+						onclick="PF('dlgforNovo').hide();" />
 				</h:panelGrid>
 			</h:form>
 	    </p:dialog>
 	    
 	    <p:dialog widgetVar="dlgforExcluir" closable="false" draggable="false" resizable="false" 
 		header="Excluir Fornecedor" modal="true" appendTo="@(body)">
-			<h:form id="frmExcluirForn">
-				<h:panelGrid id="pnExcluirForn" columns="2">
+			<h:form id="frmforExcluir">
+				<h:panelGrid id="pnforExcluir" columns="2">
 					<h:outputText value="Código: " />
 					<h:outputText value="#{MBFornecedores.fornecedores.codigo}"/>
 					
@@ -87,7 +115,9 @@
 				</h:panelGrid>
 					
 				<h:panelGrid columns="2">
-					<p:commandButton value="Excluir" actionListener="#{MBFornecedores.excluir}"
+					<p:commandButton 
+						value="Excluir" 
+						actionListener="#{MBFornecedores.excluir}"
 						oncomplete="PF('dlgforExcluir').hide(); PF('tabelaFornecedores').clearFilters(); " 
 						update=":frmFornecedores:tbFornecedores :msgGlobal" />
 					<p:commandButton value="Cancelar" onclick="PF('dlgforExcluir').hide();"/>
@@ -96,21 +126,31 @@
 		</p:dialog>
 		
 		<p:dialog widgetVar="dlgforEditar" closable="false" draggable="false" resizable="false" 
-		header="Editar Fornecedor" modal="true" appendTo="@(body)">
+			header="Editar Fornecedor" modal="true" appendTo="@(body)">
 			<h:form id="frmEditarForn">
 				<h:panelGrid id="pnEditarForn" columns="2">
 					<h:outputText value="Código: " />
 					<h:outputText value="#{MBFornecedores.fornecedores.codigo}"/>
 					
-					<h:outputText value="Descrição: " />
-					<h:inputText value="#{MBFornecedores.fornecedores.descricao}"/>
+					<h:outputText 
+						value="Descrição: " 
+						for="txtEdtfor"/>
+					<h:inputText
+						id="txtEdtfor"
+						value="#{MBFornecedores.fornecedores.descricao}"
+						required="true" 
+						requiredMessage="O campo descrição é obrigatório."/>
 				</h:panelGrid>
 					
 				<h:panelGrid columns="2">	
-					<p:commandButton value="Editar" actionListener="#{MBFornecedores.editar}"
-							oncomplete="PF('dlgforEditar').hide(); PF('tabelaFornecedores').clearFilters(); " 
-							update=":frmFornecedores:tbFornecedores :msgGlobal" />
-					<p:commandButton value="Cancelar" onclick="PF('dlgforEditar').hide();"/>
+					<p:commandButton 
+						value="Editar" 
+						actionListener="#{MBFornecedores.editar}" 
+						oncomplete="verificarCampos(xhr, status, args, 'dlgforEditar', 'tbFornecedores');" 
+						update=":frmFornecedores:tbFornecedores :msgGlobal"/>
+					<p:commandButton 
+						value="Cancelar" 
+						onclick="PF('dlgforEditar').hide();"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

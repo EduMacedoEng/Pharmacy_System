@@ -95,10 +95,10 @@ public class FornecedoresBean {
 			
 			itens = fdao.listar();
 			
-			JSFUtil.adicionarMensagemSucesso("Fornecedores editado com sucesso!!!");
+			JSFUtil.adicionarMensagemSucesso("Fornecedor editado com sucesso!!!");
 			
 		} catch (Exception e) {
-			JSFUtil.adicionarMensagemErro("Não é possível editar um fornecedor(es) com produtos associados.");
+			JSFUtil.adicionarMensagemErro("Não é possível editar um fornecedor com produtos associados.");
 			e.printStackTrace();
 		}
 	} 
