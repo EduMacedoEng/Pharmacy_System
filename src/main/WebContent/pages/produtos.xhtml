@@ -137,7 +137,8 @@
 						update=":frmProdutos:tbProdutos :msgGlobal"
 					/>
 					<p:commandButton 
-						value="Cancelar" 
+						value="Cancelar"
+						process="@this"
 						onclick="PF('dlgproNovo').hide();"/>
 				</h:panelGrid>
 			</h:form>
@@ -224,7 +225,10 @@
 						actionListener="#{MBProdutos.editar}"
 						oncomplete="verificarCampos(xhr, status, args, 'dlgproEditar', 'tbProdutos');"
 						update=":frmProdutos:tbProdutos :msgGlobal" />
-					<p:commandButton value="Cancelar" onclick="PF('dlgproEditar').hide();"/>
+					<p:commandButton 
+						value="Cancelar" 
+						process="@this"
+						onclick="PF('dlgproEditar').hide();"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
